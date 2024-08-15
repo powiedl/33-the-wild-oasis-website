@@ -1,13 +1,14 @@
-"use client";
+'use client';
 import {
   differenceInDays,
   isPast,
   isSameDay,
   isWithinInterval,
-} from "date-fns";
-import { DayPicker } from "react-day-picker";
-import "react-day-picker/dist/style.css";
-import { useReservation } from "@/app/_components/ReservationContext";
+} from 'date-fns';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
+import { useReservation } from '@/app/_components/ReservationContext';
+import CabinOccupied from './CabinOccupied';
 
 function isAlreadyBooked(range, datesArr) {
   return (
@@ -19,6 +20,12 @@ function isAlreadyBooked(range, datesArr) {
   );
 }
 
+function isEmptyObject(obj) {
+  return (
+    obj.constructor === Object && // der constructor von obj ist Object - also ist obj ein Object
+    Object.keys(obj).length === 0
+  ); // und das Objekt hat keine keys - also ist es ein leeres Objekt
+}
 function DateSelector({ settings, cabin, bookedDates }) {
   const { range, setRange, resetRange } = useReservation();
   // CHANGE
@@ -78,7 +85,7 @@ function DateSelector({ settings, cabin, bookedDates }) {
                 <span>&times;</span> <span>{numNights}</span>
               </p>
               <p>
-                <span className='text-lg font-bold uppercase'>Total</span>{" "}
+                <span className='text-lg font-bold uppercase'>Total</span>{' '}
                 <span className='text-2xl font-semibold'>${cabinPrice}</span>
               </p>
             </>
@@ -86,12 +93,15 @@ function DateSelector({ settings, cabin, bookedDates }) {
         </div>
 
         {range?.from || range?.to ? (
-          <button
-            className='border border-primary-800 py-2 px-4 text-sm font-semibold'
-            onClick={() => resetRange()}
-          >
-            Clear
-          </button>
+          <>
+            {isEmptyObject(displayRange) && <CabinOccupied range={range} />}
+            <button
+              className='border border-primary-800 py-2 px-4 text-sm font-semibold'
+              onClick={() => resetRange()}
+            >
+              Clear
+            </button>
+          </>
         ) : null}
       </div>
     </div>
