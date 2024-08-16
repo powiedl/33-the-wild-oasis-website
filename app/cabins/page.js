@@ -1,11 +1,11 @@
-import { Suspense } from "react";
-import CabinList from "@/app/_components/CabinList";
-import Spinner from "@/app/_components/Spinner";
-import Filter from "@/app/_components/Filter";
-import ReservationReminder from "@/app/_components/ReservationReminder";
+import { Suspense } from 'react';
+import CabinList from '@/app/_components/CabinList';
+import Spinner from '@/app/_components/Spinner';
+import Filter from '@/app/_components/Filter';
+import ReservationReminder from '@/app/_components/ReservationReminder';
 
 export const metadata = {
-  title: "Cabins",
+  title: 'Cabins',
 };
 //export const revalidate = 0; // data cache opt-out (damit Änderungen in der Datenbank auch im UI "ankommen")
 export const revalidate = 15; // alle 15 Sekunden, damit man nicht solange warten muss ...
@@ -13,7 +13,9 @@ export const revalidate = 15; // alle 15 Sekunden, damit man nicht solange warte
 // - weil die Seite jetzt sowieso dynamisch ist
 
 export default function Page({ searchParams }) {
-  const filter = searchParams?.capacity ?? "all";
+  const filter = searchParams?.capacity ?? 'all';
+  const rangeFrom = searchParams?.from;
+  const rangeTo = searchParams?.to;
 
   return (
     <div>

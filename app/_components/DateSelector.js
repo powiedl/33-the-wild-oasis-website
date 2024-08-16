@@ -1,6 +1,7 @@
 'use client';
 import {
   differenceInDays,
+  format,
   isPast,
   isSameDay,
   isWithinInterval,
@@ -9,6 +10,8 @@ import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import { useReservation } from '@/app/_components/ReservationContext';
 import CabinOccupied from './CabinOccupied';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 function isAlreadyBooked(range, datesArr) {
   return (
@@ -27,6 +30,10 @@ function isEmptyObject(obj) {
   ); // und das Objekt hat keine keys - also ist es ein leeres Objekt
 }
 function DateSelector({ settings, cabin, bookedDates }) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
   const { range, setRange, resetRange } = useReservation();
   // CHANGE
   // const regularPrice = 23;
@@ -44,13 +51,34 @@ function DateSelector({ settings, cabin, bookedDates }) {
   // SETTINGS
   const { minBookingLength, maxBookingLength } = settings;
 
+  function handleSelect(range) {
+    // const params = new URLSearchParams(searchParams);
+    // const rangeFrom = (range?.from && format(range.from, 'yyyy-MM-dd')) || '-';
+    // const rangeTo = (range?.to && format(range.to, 'yyyy-MM-dd')) || '-';
+    // rangeFrom !== '-' && params.set('from', rangeFrom);
+    // rangeTo !== '-' && params.set('to', rangeTo);
+    //router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+
+    //console.log(`DateSelector - handleSelect: ${rangeFrom} to ${rangeTo}`);
+
+    setRange(range);
+  }
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams);
+    const rangeFrom = (range?.from && format(range.from, 'yyyy-MM-dd')) || '-';
+    const rangeTo = (range?.to && format(range.to, 'yyyy-MM-dd')) || '-';
+    rangeFrom !== '-' && params.set('from', rangeFrom);
+    rangeTo !== '-' && params.set('to', rangeTo);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }, [range, pathname, router, searchParams]);
   return (
     <div className='flex flex-col justify-between'>
       <DayPicker
         className='pt-4 place-self-center pl-4'
         mode='range'
         selected={displayRange}
-        onSelect={(range) => setRange(range)}
+        // onSelect={(range) => setRange(range)}
+        onSelect={(range) => handleSelect(range)}
         min={minBookingLength + 1}
         max={maxBookingLength}
         startmMonth={new Date()}

@@ -15,7 +15,7 @@ export default function CabinOccupied({ range }) {
     const formatedPoint = format(new Date(pointInTime, 'dd.MM.yy'));
     return formatedPoint;
   };
-  console.log(timeframe(range));
+  //console.log(timeframe(range));
 
   return (
     <div className='flex flex-col text-accent-300 bg-primary-600 px-2 py-1 rounded-md'>
