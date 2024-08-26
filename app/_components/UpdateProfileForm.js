@@ -1,7 +1,7 @@
-"use client";
-import SubmitButton from "@/app/_components/SubmitButton";
-import { updateGuest } from "@/app/_lib/actions";
-import { useState } from "react";
+'use client';
+import SubmitButton from '@/app/_components/SubmitButton';
+import { updateGuest } from '@/app/_lib/actions';
+import { useState } from 'react';
 export default function UpdateProfileForm({ children, guest }) {
   const [count, setCount] = useState();
   const { fullName, email, nationality, nationalID, countryFlag } = guest;
@@ -45,7 +45,9 @@ export default function UpdateProfileForm({ children, guest }) {
         </div>
 
         <div className='space-y-2'>
-          <label htmlFor='nationalID'>National ID number</label>
+          <label htmlFor='nationalID'>
+            National ID number (6 to 12 characters, A-Z and 0-9)
+          </label>
           <input
             name='nationalID'
             defaultValue={nationalID}

@@ -1,8 +1,8 @@
-"use client";
-import { useFormStatus } from "react-dom";
+'use client';
+import { useFormStatus } from 'react-dom';
 export default function SubmitButton({
-  pendlingLabel = "Updating ...",
-  children = "Update profile",
+  pendlingLabel = 'Updating ...',
+  children = 'Update profile',
 }) {
   const { pending } = useFormStatus(); // weil das ein Hook ist, muss Button eine Client Component sein
   return (
