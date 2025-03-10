@@ -12,10 +12,11 @@ export const revalidate = 15; // alle 15 Sekunden, damit man nicht solange warte
 // jetzt, wo die Seite dynamisch ist (wegen searchParams) ist die revalidate Anweisung "sinnlos"
 // - weil die Seite jetzt sowieso dynamisch ist
 
-export default function Page({ searchParams }) {
-  const filter = searchParams?.capacity ?? 'all';
-  const rangeFrom = searchParams?.from;
-  const rangeTo = searchParams?.to;
+export default async function Page({ searchParams }) {
+  const sePa = await searchParams;
+  const filter = sePa?.capacity ?? 'all';
+  const rangeFrom = sePa?.from;
+  const rangeTo = sePa?.to;
 
   return (
     <div>

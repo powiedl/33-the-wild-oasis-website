@@ -1,10 +1,10 @@
-import SubmitButton from "@/app/_components/SubmitButton";
-import { updateReservation } from "@/app/_lib/actions";
-import { getBooking, getCabin } from "@/app/_lib/data-service";
+import SubmitButton from '@/app/_components/SubmitButton';
+import { updateReservation } from '@/app/_lib/actions';
+import { getBooking, getCabin } from '@/app/_lib/data-service';
 
 export default async function Page({ params }) {
   // CHANGE
-  const { reservationId } = params;
+  const { reservationId } = await params;
   const { numGuests, cabinId, observations } = await getBooking(reservationId);
   //console.log(observations);
 
@@ -21,7 +21,7 @@ export default async function Page({ params }) {
         className='bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col'
         action={updateReservation}
       >
-        <input hidden name='reservationId' value={reservationId} />
+        <input hidden name='reservationId' value={reservationId} readOnly />
         <div className='space-y-2'>
           <label htmlFor='numGuests'>How many guests?</label>
           <select
@@ -36,7 +36,7 @@ export default async function Page({ params }) {
             </option> */}
             {Array.from({ length: maxCapacity }, (_, i) => i + 1).map((x) => (
               <option value={x} key={x}>
-                {x} {x === 1 ? "guest" : "guests"}
+                {x} {x === 1 ? 'guest' : 'guests'}
               </option>
             ))}
           </select>
